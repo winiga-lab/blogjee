@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="loginStyle.css" />
+    </h:head>
+    <h:body class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 mx-auto p-0">
+                <div class="card">
+                    <div class="login-box">
+                        <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked='true'/><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"/><label for="tab-2" class="tab">Sign Up</label>
+                            <div class="login-space">
+                                <div class="login">
+                                    <h:form>
+                                        <div class="group"> <label for="user" class="label">Email</label> <h:inputText value="#{login.username}" id="user" class="input" a:placeholder="Enter your username"/> </div>
+                                        <div class="group"> <label for="pass" class="label">Password</label> <h:inputSecret value="#{login.password}" id="pass" class="input" a:placeholder="Enter your password"/> </div>
+                                        <div class="group"> <input id="check" type="checkbox" class="check" checked='false'/> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div>
+                                        <div class="group"> <h:commandButton  action="#{login.doLogin()}" class="button" value="S'authentifier" /> </div>
+                                    </h:form>
+                                    <div class="hr"></div>
+                                    <div class="foot"> <a href="#">Forgot Password?</a> </div>
+                                </div>
+                                <div class="sign-up-form">
+                                    <h:form>
+                                        <div class="group"> <label for="nom" class="label">Nom</label> <h:inputText value="#{register.user.nom}" id="nom" class="input" a:placeholder="Doe ..."/> </div>
+                                        <div class="group"> <label for="prenom" class="label">Prenom</label> <h:inputText value="#{register.user.prenom}" id="prenom" class="input" a:placeholder="Jhon ..."/> </div>
+                                        <div class="group"> <label for="email" class="label">Email</label> <h:inputText value="#{register.user.email}" id="email" class="input" a:placeholder="jhon.doe@example.com"/> </div>
+                                        <div class="group"> <label for="newPass" class="label">Mot de passe</label> <h:inputSecret value="#{register.user.password}" id="newPass" class="input" a:placeholder="Votre mot de passe"/> </div>
+                                        <div class="group"> <label for="confimrPass" class="label">Repeat Password</label> <input id="confimrPass" type="password" class="input" data-type="password" placeholder="Confirmez votre mot de passe"/> </div>
+                                        <div class="group"> <h:commandButton action="#{register.doRegister()}" value="S'enrégistrer" class="button" /> </div>
+                                    </h:form>
+                                    <div class="hr"></div>
+                                    <div class="foot"> <label for="tab-1">Already Member?</label> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
+
+     </h:body>
+    
+</html>
+
