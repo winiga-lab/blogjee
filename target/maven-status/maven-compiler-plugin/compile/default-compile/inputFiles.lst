@@ -1,3 +1,5 @@
+E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\dao\PostDao.java
+E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\utils\Paginator.java
 E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\JAXRSConfiguration.java
 E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\controller\LoginController.java
 E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\security\CustomJDBCRealm.java
@@ -5,4 +7,6 @@ E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeb
 E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\model\User.java
 E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\security\BCryptPasswordService.java
 E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\dao\UserDao.java
+E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\model\Post.java
 E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\resources\JavaEE8Resource.java
+E:\#Project\jee-class-project\jeeblog\src\main\java\com\eii\jeeclassproject\jeeblog\controller\PostController.java

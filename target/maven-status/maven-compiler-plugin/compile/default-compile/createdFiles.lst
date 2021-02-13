@@ -1,9 +1,13 @@
 com\eii\jeeclassproject\jeeblog\security\BCryptPasswordService.class
 com\eii\jeeclassproject\jeeblog\dao\UserDao.class
 com\eii\jeeclassproject\jeeblog\JAXRSConfiguration.class
-com\eii\jeeclassproject\jeeblog\security\CustomJDBCRealm.class
 com\eii\jeeclassproject\jeeblog\controller\LoginController.class
+com\eii\jeeclassproject\jeeblog\dao\PostDao.class
 com\eii\jeeclassproject\jeeblog\model\User.class
 com\eii\jeeclassproject\jeeblog\resources\JavaEE8Resource.class
-com\eii\jeeclassproject\jeeblog\controller\RegisterController.class
 com\eii\jeeclassproject\jeeblog\security\CustomJDBCRealm$1.class
+com\eii\jeeclassproject\jeeblog\utils\Paginator.class
+com\eii\jeeclassproject\jeeblog\controller\PostController.class
+com\eii\jeeclassproject\jeeblog\security\CustomJDBCRealm.class
+com\eii\jeeclassproject\jeeblog\controller\RegisterController.class
+com\eii\jeeclassproject\jeeblog\model\Post.class

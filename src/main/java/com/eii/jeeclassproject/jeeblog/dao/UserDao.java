@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class UserDao {
     
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
-    
+
     private EntityManager em; 
     
     private EntityTransaction tx;
@@ -40,7 +40,7 @@ public class UserDao {
      */
     public UserDao() {
         EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("blogPU");//
-        EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+        em = ENTITY_MANAGER_FACTORY.createEntityManager();
         
         tx =  em.getTransaction(); 
         

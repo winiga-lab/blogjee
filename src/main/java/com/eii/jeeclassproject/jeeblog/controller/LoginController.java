@@ -6,10 +6,8 @@
 package com.eii.jeeclassproject.jeeblog.controller;
 
 import com.eii.jeeclassproject.jeeblog.dao.UserDao;
-import com.eii.jeeclassproject.jeeblog.model.User;
 import java.io.IOException;
 import java.io.Serializable;
-import static java.lang.Math.log;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -19,7 +17,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
