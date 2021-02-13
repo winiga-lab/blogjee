@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <nav class="paginator">
+        <c:choose>
+            <c:when test="#{posts.postListHasPrevious()}">
+                <a class="nav-left" href="#">&lt; Prec</a>
+            </c:when>
+            <c:otherwise>
+                <span class="nav-left faded">&lt; Prev</span>
+            </c:otherwise>
+        </c:choose>
+        
+        <span>#{posts.page} / #{posts.postTotalPage()}</span>
+        
+        <c:choose>
+            <c:when test="#{posts.postListHasNext()}">
+                <a class="nav-right" href="#">Suiv &gt;</a>
+            </c:when>
+            <c:otherwise>
+                <span class="nav-right faded">Suiv &gt;</span>
+            </c:otherwise>
+        </c:choose>
+    </nav>
+</html>
+
