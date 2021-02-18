@@ -3,7 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:of="http://omnifaces.org/functions">
+      xmlns:of="http://omnifaces.org/functions"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <ui:include src="quill-css.xhtml" />
     <article class="single" itemscope="" itemtype="http://schema.org/BlogPosting">
         <div class="meta">
             <c:if test="#{post.datePost != null}">
@@ -15,7 +18,20 @@
         
         <h1 class="headline" itemprop="headline">#{posts.postById.title}</h1>
         <section class="body" itemprop="articleBody">
-            #{posts.postById.details}
+            <div id="quill-container"></div>
+            <ui:include src="quill-js.xhtml" />
+            
+            <script >
+                var quill = new Quill('#quill-container', {
+                    modules: {
+                        syntax: true,
+                        toolbar: false
+                    },
+                    readOnly:true
+                });
+                quill.setContents(#{posts.postById.details});
+            </script>
+            
         </section>
     </article>
     

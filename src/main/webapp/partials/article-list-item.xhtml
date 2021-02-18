@@ -18,9 +18,9 @@
                 </div>
                 <section class="summary">
                     <p>
-                        #{of:abbreviate(post.details, 200)}
+                        #{of:abbreviate(post.resume, 200)}
                     </p>
-                    <c:if test="#{post.details.length() > 200}">
+                    <c:if test="#{post.resume.length() > 200}">
                         <a href="#">Continuer...</a>
                     </c:if>
                 </section>

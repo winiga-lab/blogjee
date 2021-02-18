@@ -10,6 +10,7 @@ import com.eii.jeeclassproject.jeeblog.model.Post;
 import com.eii.jeeclassproject.jeeblog.utils.Paginator;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -29,6 +30,7 @@ public class PostController implements Serializable {
     
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     
+    @EJB
     private PostDao postDao;
     
     private int page;
@@ -50,13 +52,7 @@ public class PostController implements Serializable {
     }
     
     public List<Post> paginateMixedPost() {
-        
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-        .getRequest();
-        
-        page = ((request.getParameter("page") != null) && (!request.getParameter("page").isEmpty()) ) ? Integer.valueOf(request.getParameter("page")) : 1;
-        
-        return postDao.getMixedPaginatePosts(page, resultPerPage);
+        return postDao.getPaginatePostsWithoutDetails(page, resultPerPage);
     }
     
     public Post getPostById() {

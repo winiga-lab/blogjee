@@ -65,7 +65,6 @@ public class CustomJDBCRealm extends JdbcRealm {
 
             String password = null;
             String salt = null;
-            System.out.println(saltStyle);
             switch (saltStyle) {
             case NO_SALT:
             case CRYPT:
