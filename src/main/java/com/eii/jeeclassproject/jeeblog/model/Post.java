@@ -8,17 +8,22 @@ package com.eii.jeeclassproject.jeeblog.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -40,10 +45,19 @@ public class Post implements Serializable {
     @Size(max = 45)
     @Column(name = "title")
     private String title;
-    @Lob
-    @Size(max = 2147483647)
+    @Basic(optional = false)
+    @NotNull()
+    @Lob()
+    @Size(min = 1, max = 2147483647)
     @Column(name = "details")
     private String details;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 300)
+    @Column(name = "resume")
+    private String resume;
+    @ManyToOne @JoinColumn(name="owner_id", nullable = false )
+    private User user;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +70,24 @@ public class Post implements Serializable {
     private Date datePost;
 
     public Post() {
+    }
+
+    public Post(Integer id,String title, String resume, Date datePost, User user) {
+        this.title = title;
+        this.resume = resume;
+        this.user = user;
+        this.id = id;
+        this.datePost = datePost;
+    }
+    
+    
+    
+    @PrePersist
+    public void defaultDatePost() {
+        
+        if(this.datePost == null) {
+            this.datePost = new Date(System.currentTimeMillis());
+        }
     }
 
     public Post(Integer id) {
@@ -119,5 +151,22 @@ public class Post implements Serializable {
     public void setDetails(String details) {
         this.details = details;
     }
+
+    public String getResume() {
+        return resume;
+    }
+
+    public void setResume(String resume) {
+        this.resume = resume;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     
 }

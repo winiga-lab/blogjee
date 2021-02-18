@@ -8,6 +8,7 @@ package com.eii.jeeclassproject.jeeblog.controller;
 import com.eii.jeeclassproject.jeeblog.dao.UserDao;
 import java.io.IOException;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -18,6 +19,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,9 @@ public class LoginController implements Serializable{
     
     private String username;
     private String password;
-    private UserDao udao = new UserDao();
+    
+    @EJB
+    private UserDao udao;
 
     public LoginController(String username, String password) {
         this.username = username;
@@ -44,7 +48,6 @@ public class LoginController implements Serializable{
     }
 
     public LoginController() {
-        udao = new UserDao();
     }
     
     public void doLogin() {
@@ -54,8 +57,7 @@ public class LoginController implements Serializable{
         try {
             subject.login(token);
             Subject currentUser = SecurityUtils.getSubject();
-            System.out.println(udao.getUserByEmail(currentUser.getPrincipal().toString()).toString());
-            FacesContext.getCurrentInstance().getExternalContext().redirect("pages/welcome.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(WebUtils.getSavedRequest(null).getRequestUrl());
         } catch (UnknownAccountException ex) {
             log.error(ex.getMessage(), ex);
         } catch (IncorrectCredentialsException | LockedAccountException ex) {

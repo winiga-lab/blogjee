@@ -15,7 +15,6 @@ public class Paginator implements Serializable{
     
     public static boolean hasNext(int currentPage, int totalPage) {
         
-        System.out.println(currentPage + " " + totalPage);
         if(currentPage >= 0 && totalPage >= 0 ) {
             return  !(totalPage == currentPage);
         }
