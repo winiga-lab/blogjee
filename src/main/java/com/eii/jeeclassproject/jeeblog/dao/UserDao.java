@@ -6,6 +6,7 @@
 package com.eii.jeeclassproject.jeeblog.dao;
 
 import com.eii.jeeclassproject.jeeblog.controller.LoginController;
+import com.eii.jeeclassproject.jeeblog.model.Roles;
 import com.eii.jeeclassproject.jeeblog.model.User;
 import com.eii.jeeclassproject.jeeblog.security.BCryptPasswordService;
 import javax.ejb.Stateless;
@@ -52,6 +53,10 @@ public class UserDao {
         try {
             
             tx.begin();
+            
+            if(user.getRole() == null) {
+                user.setRole(this.getOrCreateRole("user"));
+            }
             
             session.save(user);
             
@@ -123,6 +128,33 @@ public class UserDao {
             log.error(ex.getMessage(), ex);
             
             return false;
+        }
+    }
+    
+    
+    public Roles getOrCreateRole(String roleName) {
+        
+        Session session = em.unwrap(Session.class);
+        try{
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery query = builder.createQuery(Roles.class);
+            
+            Root<Roles> root = query.from(Roles.class);
+            query.select(root).where(builder.equal(root.get("roleName"), roleName));
+            TypedQuery<Roles> q = session.createQuery(query);
+            Roles role = q.getSingleResult();
+            
+            if(role == null) {
+                role = new Roles();
+                role.setRoleName(roleName);
+                session.save(role);
+            }
+            
+            return role;
+        }catch(Exception ex) {
+            log.error(ex.getMessage(), ex);
+            
+            return null;
         }
     }
     

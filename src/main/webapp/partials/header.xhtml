@@ -2,13 +2,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml"
           xmlns:h="http://xmlns.jcp.org/jsf/html"
-          xmlns:ui="http://java.sun.com/jsf/facelets">
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
         
     <header>
       <div class="container clearfix">
-        <a class="path" href="/">Blog JEE</a>
+          <h:link class="path" outcome="/index.xhtml">Blog JEE</h:link>
         <span class="caret"># _</span>
         <div class="right">
+            <c:choose>
+                <c:when test="#{sessionControl.authenticated}">
+                    <h:form>
+                        <span>
+                            _ welcome 
+                            <h:link class="path mr-2" value="#Editeur" outcome="editor.xhtml" /> 
+                            <h:commandLink class="path" value="Deconnexion" action="#{sessionControl.disconnect()}" />
+                        </span>
+                    </h:form>
+                </c:when>
+                <c:otherwise>
+                    <h:link outcome="/login.xhml" type="button" class="btn btn-default pull-left" style="margin-left: 20px;">
+                        <span id="toDayBtn">Se connecter /S'inscrire</span>
+                    </h:link>
+                </c:otherwise>
+            </c:choose>
+            
         </div>
       </div>
     </header>

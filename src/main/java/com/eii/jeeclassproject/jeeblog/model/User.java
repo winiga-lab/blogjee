@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -62,7 +64,8 @@ public class User implements Serializable {
     @Size(max = 512)
     @Column(name = "token")
     private String token;
-    
+    @ManyToOne @JoinColumn(name="role_id", nullable = false )
+    private Roles role;
     @OneToMany(targetEntity = Post.class, mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
@@ -164,6 +167,14 @@ public class User implements Serializable {
 
     public List<Post> getPosts() {
         return posts;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
     
 }
