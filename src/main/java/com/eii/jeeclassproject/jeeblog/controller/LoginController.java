@@ -9,6 +9,7 @@ import com.eii.jeeclassproject.jeeblog.dao.UserDao;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -56,8 +57,13 @@ public class LoginController implements Serializable{
 
         try {
             subject.login(token);
-            Subject currentUser = SecurityUtils.getSubject();
-            FacesContext.getCurrentInstance().getExternalContext().redirect(WebUtils.getSavedRequest(null).getRequestUrl());
+            //Subject currentUser = SecurityUtils.getSubject();
+            if(WebUtils.getSavedRequest(null) != null && !WebUtils.getSavedRequest(null).getRequestUrl().isEmpty()){
+                FacesContext.getCurrentInstance().getExternalContext().redirect(WebUtils.getSavedRequest(null).getRequestUrl());
+            } else {
+                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                ec.redirect(ec.getRequestContextPath() + "/");
+            }
         } catch (UnknownAccountException ex) {
             log.error(ex.getMessage(), ex);
         } catch (IncorrectCredentialsException | LockedAccountException ex) {
