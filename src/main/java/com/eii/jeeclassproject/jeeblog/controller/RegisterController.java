@@ -8,6 +8,7 @@ package com.eii.jeeclassproject.jeeblog.controller;
 import com.eii.jeeclassproject.jeeblog.dao.UserDao;
 import com.eii.jeeclassproject.jeeblog.model.User;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -19,12 +20,15 @@ import javax.inject.Named;
 @ViewScoped
 public class RegisterController implements Serializable{
     
+    private static final long serialVersionUID = 1L;    
+    
     User user;
+    
+    @EJB
     UserDao udao;
 
     public RegisterController() {
         user = new User();
-        udao = new UserDao();
     }
     
     public void doRegister() {

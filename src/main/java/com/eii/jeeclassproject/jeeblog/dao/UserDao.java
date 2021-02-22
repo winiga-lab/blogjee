@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 @Stateless
 public class UserDao {
     
-    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserDao.class);
 
     @PersistenceContext(unitName = "blogPU")
     private EntityManager em; 
@@ -47,12 +47,12 @@ public class UserDao {
     
     public  boolean saveUser(User user) {
         
-        EntityTransaction tx = em.getTransaction();
+        //EntityTransaction tx = em.getTransaction();
         Session session = em.unwrap(Session.class);
  
         try {
             
-            tx.begin();
+            //tx.begin();
             
             if(user.getRole() == null) {
                 user.setRole(this.getOrCreateRole("user"));
@@ -60,13 +60,13 @@ public class UserDao {
             
             session.save(user);
             
-            tx.commit();
+            //tx.commit();
             
             return true;
             
             
         } catch(Exception ex) {
-            if(tx != null) tx.rollback();
+            //if(tx != null) tx.rollback();
             
             log.error(ex.getMessage(), ex);
             
@@ -76,23 +76,27 @@ public class UserDao {
     
     public  boolean saveUserWithCrypt(User user) {
         
-        EntityTransaction tx = em.getTransaction();
+        //EntityTransaction tx = em.getTransaction();
         Session session = em.unwrap(Session.class);
         
         try {
             
-            tx.begin();
+            //tx.begin();
             user.setPassword(new BCryptPasswordService().encryptPassword(user.getPassword()) );
+            
+            if(user.getRole() == null) {
+                user.setRole(this.getOrCreateRole("user"));
+            }
             
             session.save(user);
             
-            tx.commit();
+            //tx.commit();
             
             return true;
             
             
         } catch(IllegalArgumentException ex) {
-            if(tx != null) tx.rollback();
+            //if(tx != null) tx.rollback();
             
             log.error(ex.getMessage(), ex);
             
@@ -102,12 +106,12 @@ public class UserDao {
     
     public  boolean updateUserTokenByEmail(String email, String token) {
         
-        EntityTransaction tx = em.getTransaction();
+        //EntityTransaction tx = em.getTransaction();
         Session session = em.unwrap(Session.class);
         
         try {
             
-            tx.begin();
+            //tx.begin();
             //user.setPassword(new BCryptPasswordService().encryptPassword(user.getPassword()) );
             
             CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -119,11 +123,11 @@ public class UserDao {
             
             int q = session.createQuery(query).executeUpdate();
             
-            tx.commit();
+            //tx.commit();
             
             return (q > 0) ;
         } catch(IllegalArgumentException ex) {
-            if(tx != null) tx.rollback();
+            //if(tx != null) tx.rollback();
             
             log.error(ex.getMessage(), ex);
             
@@ -160,13 +164,13 @@ public class UserDao {
     
     public User getUserById(Long id) {
         
-        EntityTransaction tx = em.getTransaction();
+        //EntityTransaction tx = em.getTransaction();
         Session session = em.unwrap(Session.class);
         
         try{
             return session.byId(User.class).getReference(id);
         } catch(Exception ex) {
-            if(tx != null) tx.rollback();
+            //if(tx != null) tx.rollback();
             
             log.error(ex.getMessage(), ex);
             
@@ -217,22 +221,22 @@ public class UserDao {
     
     public  boolean deleteUser(User user) {
         
-        EntityTransaction tx = em.getTransaction();
+        //EntityTransaction tx = em.getTransaction();
         Session session = em.unwrap(Session.class);
         
         try {
             
-            tx.begin();
+            //tx.begin();
             
             session.delete(user);
             
-            tx.commit();
+            //tx.commit();
             
             return true;
             
             
         } catch(Exception ex) {
-            if(tx != null) tx.rollback();
+            //if(tx != null) tx.rollback();
             
             log.error(ex.getMessage(), ex);
             
