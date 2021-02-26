@@ -39,7 +39,9 @@
 .baseff { color: var(--baseff); }
 
 /* General Page Layout */
-
+.bg-very-dark {
+    background-color: var(--base00);
+}
 body {
   margin: 0;
   background-color: var(--base00);
