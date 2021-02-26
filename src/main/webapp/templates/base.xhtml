@@ -27,6 +27,27 @@
                 <ui:include src="/partials/footer.xhtml" />
             </ui:insert>
         </h:body>
+        <script
+            id="cookieWarn"
+            data-lang-en="{
+                'text':'Notre site utilise des cookies afin d\'améliorer votre expérience. ©',
+                'accept_text':'OK',
+                'more_text':'Plus d\'infos',
+                'more_link':'https://ec.europa.eu/info/law/law-topic/data-protection_en',
+                'reject_info':null,
+                'reject_link':null,
+                'close_text':'Close'
+            }"
+            data-expire="365" 
+            data-domain="*.domain.tld" 
+            data-path="/" 
+            data-secure="true" 
+            data-delay="750" 
+            data-class="customCookieWarning bg-very-dark"
+            data-style="#cookieWarnBox  span { background-color: #ffc107 ! important; color: #fff!important; }" 
+            type="text/javascript"
+            src="#{request.contextPath}/resources/js/cookie-warn.min.js">
+        </script>
     </f:view>
 </html>
 
