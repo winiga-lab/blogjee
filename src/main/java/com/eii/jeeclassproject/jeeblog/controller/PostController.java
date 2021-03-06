@@ -15,70 +15,94 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author winiga
  */
-
 @Named("posts")
 @RequestScoped
 public class PostController implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
-    
+
     @EJB
     private PostDao postDao;
-    
+
     private int page;
     private int id;
-    
+    private String title;
+
     final static int resultPerPage = 3;
-    
-    
+
     public PostController() {
-        
+
         postDao = new PostDao();
-        
+
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-        .getRequest();
-        
-        page = ((request.getParameter("page") != null) && (!request.getParameter("page").isEmpty()) ) ? Integer.valueOf(request.getParameter("page")) : 1;
-        
-        id = ((request.getParameter("id") != null) && (!request.getParameter("id").isEmpty()) ) ? Integer.valueOf(request.getParameter("id")) : -1;
+                .getRequest();
+
+        page = ((request.getParameter("page") != null) && (!request.getParameter("page").isEmpty())) ? Integer.valueOf(request.getParameter("page")) : 1;
+
+        id = ((request.getParameter("id") != null) && (!request.getParameter("id").isEmpty())) ? Integer.valueOf(request.getParameter("id")) : -1;
+
+        title = request.getParameter("title");
     }
-    
+
     public List<Post> paginateMixedPost() {
         return postDao.getPaginatePostsWithoutDetails(page, resultPerPage);
     }
-    
+
+    private void increaseViewsCount(String title) {
+
+        Subject currentUser = SecurityUtils.getSubject();
+        //update views of the given post
+        Session session = currentUser.getSession();
+        if (session.getAttribute(title) == null) {
+            session.setAttribute(title, true);
+            postDao.incrementPostViewCount(title);
+        }
+    }
+
     public Post getPostById() {
-        
+
         return postDao.getPostById(id);
     }
-    
-    public boolean postListHasNext() {
-        
-        return Paginator.hasNext(page, postDao.totalPage(resultPerPage));
+
+    public Post getPostByTitle() {
+
+        if (title != null && !title.isEmpty()) {
+            increaseViewsCount(title);
+            return postDao.getPostByTitle(title);
+        }
+        return null;
     }
-    
+
+    public boolean postListHasNext() {
+
+        return Paginator.hasNext(page, postTotalPage());
+    }
+
     public boolean postListHasPrevious() {
-        
+
         return Paginator.hasPrevious(page);
     }
-    
+
     public int postTotalPage() {
-        
+
         return postDao.totalPage(resultPerPage);
     }
 
     public int getPage() {
-        
+
         return page;
     }
-    
-    
+
 }

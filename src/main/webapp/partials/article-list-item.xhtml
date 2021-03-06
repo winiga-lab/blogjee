@@ -5,27 +5,27 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:of="http://omnifaces.org/functions">
-    
-    <c:when test="#{empty posts.paginateMixedPost()}">
-        <c:forEach items="#{posts.paginateMixedPost()}" var="post" >
-            <article class="list-item" itemscope="" itemtype="http://schema.org/Blog">
-                <h2 class="headline" itemprop="headline"><h:link value="#{post.title}" outcome="postdetails.xhtml"><f:param name="id" value="#{post.id}" /></h:link></h2>
-                <div class="meta">
-                    <c:if test="#{post.datePost != null}">
-                        <span class="key">publié en</span>
-                        <span class="val"><time itemprop="datePublished" datetime="#{post.datePost}">#{of:formatDate(post.datePost, 'MMMM dd, yyyy')}</time></span>
-                    </c:if>
-                </div>
-                <section class="summary">
-                    <p>
-                        #{of:abbreviate(post.resume, 200)}
-                    </p>
-                    <c:if test="#{post.resume.length() > 200}">
-                        <a href="#">Continuer...</a>
-                    </c:if>
-                </section>
-            </article>
-        </c:forEach>
-    </c:when>
+
+
+    <article class="list-item" itemscope="" itemtype="http://schema.org/Blog">
+        <h2 class="headline" itemprop="headline"><h:link value="#{post.title}" outcome="postdetails.xhtml"><f:param name="title" value="#{post.title}" /></h:link></h2>
+        <div class="meta">
+            <c:if test="#{post.datePost != null}">
+                <span class="key">publié en</span>
+                <span class="val"><time itemprop="datePublished" datetime="#{post.datePost}">#{of:formatDate(post.datePost, 'MMMM dd, yyyy')}</time></span>
+                - 
+                <span class="key">#{post.views}</span>
+                <span class="val">Vues</span>
+            </c:if>
+        </div>
+        <section class="summary">
+            <p>
+                #{of:abbreviate(post.resume, 200)}
+            </p>
+            <c:if test="#{post.resume.length() > 200}">
+                <a href="#">Continuer...</a>
+            </c:if>
+        </section>
+    </article>
 </html>
 

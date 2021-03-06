@@ -9,14 +9,14 @@
     <ui:include src="quill-css.xhtml" />
     <article class="single" itemscope="" itemtype="http://schema.org/BlogPosting">
         <div class="meta">
-            <c:if test="#{post.datePost != null}">
-                <span class="key">publié en</span>
-                <span class="val"><time itemprop="datePublished" datetime="#{posts.postById.datePost}">#{of:formatDate(posts.postById.datePost, 'MMMM dd, yyyy')}</time></span>
+            <c:if test="#{posts.postByTitle.datePost != null}">
+                <span class="key">publié le</span>
+                <span class="val"><time itemprop="datePublished" datetime="#{posts.postByTitle.datePost}">#{of:formatDate(posts.postByTitle.datePost, 'dd MMMM, yyyy')}</time></span>
             </c:if>
             
         </div>
         
-        <h1 class="headline" itemprop="headline">#{posts.postById.title}</h1>
+        <h1 class="headline" itemprop="headline">#{posts.postByTitle.title}</h1>
         <section class="body" itemprop="articleBody">
             <div id="quill-container"></div>
             <ui:include src="quill-js.xhtml" />
@@ -29,7 +29,7 @@
                     },
                     readOnly:true
                 });
-                quill.setContents(#{posts.postById.details});
+                quill.setContents(#{posts.postByTitle.details});
             </script>
             
         </section>
