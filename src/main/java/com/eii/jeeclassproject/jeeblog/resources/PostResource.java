@@ -32,10 +32,13 @@ import org.slf4j.LoggerFactory;
  */
 @Path("post")
 public class PostResource {
+    
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     
-    
-    private PostDao postDao = new PostDao() ;
+    @EJB
+    private PostDao postDao ;
+    @EJB
+    private UserDao udao;
     
     
     @POST
@@ -43,11 +46,7 @@ public class PostResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createPost(Post post) {
         
-        UserDao udao = new UserDao();
         Subject currentUser = SecurityUtils.getSubject();
-        
-        postDao.getEntityManager();
-        udao.getEntityManager();;
         
         try{
             post.setUser(udao.getUserByEmail(currentUser.getPrincipal().toString()));

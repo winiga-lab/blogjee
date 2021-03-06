@@ -7,6 +7,7 @@ package com.eii.jeeclassproject.jeeblog.dao;
 
 import com.eii.jeeclassproject.jeeblog.controller.LoginController;
 import com.eii.jeeclassproject.jeeblog.model.Post;
+import com.eii.jeeclassproject.jeeblog.model.User;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -46,19 +48,12 @@ public class PostDao {
     
     public boolean savePost(Post post) {
         
-        EntityTransaction tx = em.getTransaction();
         Session session = em.unwrap(Session.class);
         
         try {
-            tx.begin();
-            
             session.save(post);
-            
-            tx.commit();
-            
             return true;
         } catch(Exception ex) {
-            if(tx != null) tx.rollback();
             
             log.error(ex.getMessage(), ex);
             
@@ -68,20 +63,56 @@ public class PostDao {
     
     public boolean updatePost(Post post) {
         
-        EntityTransaction tx = em.getTransaction();
         Session session = em.unwrap(Session.class);
         
         try {
-            tx.begin();
-            
             session.update(post);
-            
-            tx.commit();
-            
             return true;
         } catch(Exception ex) {
-            if(tx != null) tx.rollback();
             
+            log.error(ex.getMessage(), ex);
+            
+            return false;
+        }
+    }
+    
+    public boolean incrementPostViewCount(int id) {
+        
+        //EntityTransaction tx = em.getTransaction();
+        Session session = em.unwrap(Session.class);
+        
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaUpdate<Post> query = builder.createCriteriaUpdate(Post.class);
+            Root<Post> root = query.from(Post.class);
+            query.set(root.<Long>get("views"), builder.sum(root.get("views"), Long.valueOf(1)) );
+            query.where(builder.equal(root.get("id"), id));
+            
+            int q = session.createQuery(query).executeUpdate();
+            
+            return (q > 0) ;
+        } catch(IllegalArgumentException ex) {
+            log.error(ex.getMessage(), ex);
+            
+            return false;
+        }
+    }
+    
+    public boolean incrementPostViewCount(String title) {
+        
+        Session session = em.unwrap(Session.class);
+        
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaUpdate<Post> query = builder.createCriteriaUpdate(Post.class);
+            Root<Post> root = query.from(Post.class);
+            query.set(root.<Long>get("views"), builder.sum(root.get("views"), Long.valueOf(1)) );
+            query.where(builder.equal(root.get("title"), title));
+            
+            int q = session.createQuery(query).executeUpdate();
+            
+            return (q > 0) ;
+        } catch(IllegalArgumentException ex) {
             log.error(ex.getMessage(), ex);
             
             return false;
@@ -111,9 +142,12 @@ public class PostDao {
     
      public int totalPage(int resultPerPage) {
         
-        int resultCount = countPost();
+        double resultCount = countPost();
         
-        return  (Math.ceil(resultCount/resultPerPage) != 0) ? (int) Math.ceil(resultCount/resultPerPage) : 1;
+        if(Math.ceil(resultCount/resultPerPage) != 0) {
+            return (int) Math.ceil(resultCount/resultPerPage);
+        }
+        return 1;
     }
     
      /**
@@ -180,7 +214,7 @@ public class PostDao {
             CriteriaQuery<Post> query = builder.createQuery(Post.class);
             Root<Post> root = query.from(Post.class);
             
-            query.multiselect(root.get("id"), root.get("title"), root.get("resume"), root.get("datePost"), root.get("user"));
+            query.multiselect(root.get("id"), root.get("title"), root.get("resume"), root.get("views"), root.get("datePost"), root.get("user"));
             
             TypedQuery<Post> q = session.createQuery(query);
             
@@ -231,6 +265,28 @@ public class PostDao {
             return null;
         }
     }
+    
+    public Post getPostByTitle(String title) {
+        
+        Session session = em.unwrap(Session.class);
+        
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Post> query = builder.createQuery(Post.class);
+            Root<Post> root = query.from(Post.class);
+            
+            query.select(root).where(builder.equal(root.get("title"), title));
+            
+            TypedQuery<Post> q=session.createQuery(query);
+            
+            return q.getSingleResult();
+        } catch(Exception ex) {
+            log.error(ex.getMessage(), ex);
+            
+            return null;
+        }
+    }
+    
     
     public boolean deletePost(Post post) {
         

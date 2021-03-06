@@ -5,22 +5,22 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <f:event type="preRenderView" listener="#{sessionControl.redirectAuthenticated()}" />
-    
+
     <h:head>
         <title>Login - Blog JEE</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
         <h:outputStylesheet library="css" name="style.css" />
         <h:outputStylesheet library="css" name="loginStyle.css" />
-        
+
     </h:head>
     <h:body class="">
         <ui:include src="/partials/header.xhtml" />
         <div class=" container-fuild row " style="margin-left: 0; margin-right: 0">
             <div class=" mx-auto p-0">
                 <div class="card">
-                    <div class="login-box">
+                    <div class="login-box" style="color: #000;">
                         <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked='true'/><label for="tab-1" class="tab">Connexion</label> <input id="tab-2" type="radio" name="tab" class="sign-up"/><label for="tab-2" class="tab">Inscription</label>
                             <div class="login-space">
                                 <div class="login">
@@ -53,15 +53,12 @@
         </div>
         <div class="mt-5"> </div>
         <div class="mt-5"> </div>
-            <div class="pt-5">
-                <ui:include src="/partials/footer.xhtml" class="pt-5" />
-            </div>
-        
-        
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
+        <div class="pt-5">
+            <ui:include src="/partials/footer.xhtml" class="pt-5" />
+        </div>
 
-     </h:body>
-    
+
+    </h:body>
+
 </html>
 

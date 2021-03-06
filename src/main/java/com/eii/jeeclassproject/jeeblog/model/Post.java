@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Post.findByDetails", query = "SELECT p FROM Post p WHERE p.details = :details")})
 public class Post implements Serializable {
 
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull()
+    @Size(min = 1, max = 45)
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
@@ -56,6 +58,25 @@ public class Post implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "resume")
     private String resume;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "views")
+    private long views;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "draft")
+    private short draft;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "isEdited")
+    private short isEdited;
+    @Column(name = "date_edition")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateEdition;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "isDelete")
+    private short isDelete;
     @ManyToOne @JoinColumn(name="owner_id", nullable = false )
     private User user;
 
@@ -72,9 +93,10 @@ public class Post implements Serializable {
     public Post() {
     }
 
-    public Post(Integer id,String title, String resume, Date datePost, User user) {
+    public Post(Integer id,String title, String resume, Long views, Date datePost, User user) {
         this.title = title;
         this.resume = resume;
+        this.views = views;
         this.user = user;
         this.id = id;
         this.datePost = datePost;
@@ -136,6 +158,15 @@ public class Post implements Serializable {
         return "com.eii.jeeclassproject.jeeblog.model.Post[ id=" + id + " ]";
     }
 
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -160,12 +191,44 @@ public class Post implements Serializable {
         this.resume = resume;
     }
 
-    public User getUser() {
-        return user;
+    public long getViews() {
+        return views;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setViews(long views) {
+        this.views = views;
+    }
+
+    public short getDraft() {
+        return draft;
+    }
+
+    public void setDraft(short draft) {
+        this.draft = draft;
+    }
+
+    public short getIsEdited() {
+        return isEdited;
+    }
+
+    public void setIsEdited(short isEdited) {
+        this.isEdited = isEdited;
+    }
+
+    public Date getDateEdition() {
+        return dateEdition;
+    }
+
+    public void setDateEdition(Date dateEdition) {
+        this.dateEdition = dateEdition;
+    }
+
+    public short getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(short isDelete) {
+        this.isDelete = isDelete;
     }
     
     

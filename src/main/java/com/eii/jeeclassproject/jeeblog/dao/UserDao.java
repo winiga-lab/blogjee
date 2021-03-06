@@ -152,7 +152,10 @@ public class UserDao {
                 role = new Roles();
                 role.setRoleName(roleName);
                 session.save(role);
+                session.flush();
             }
+            
+            session.refresh(role);
             
             return role;
         }catch(Exception ex) {

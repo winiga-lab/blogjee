@@ -3,16 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+          
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <main role="main" class="homepage">
 
         <ui:include src="/partials/hero.xhtml" />
 
         <h1 class="headline">Articles </h1>
         <div class="article-list">
-            <ui:include src="/partials/article-list-item.xhtml" />
+            <c:when test="#{empty posts.paginateMixedPost()}">
+                <c:forEach items="#{posts.paginateMixedPost()}" var="post" >
+                    <ui:include src="/partials/article-list-item.xhtml" >
+                        <ui:param name="post" value="#{post}" />
+                    </ui:include>
+                </c:forEach>
+            </c:when>
         </div>
-        
+
         <ui:include src="/partials/paginator.xhtml" />
     </main>
 </html>
