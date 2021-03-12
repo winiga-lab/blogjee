@@ -9,8 +9,8 @@ import com.eii.jeeclassproject.jeeblog.controller.LoginController;
 import com.eii.jeeclassproject.jeeblog.dao.PostDao;
 import com.eii.jeeclassproject.jeeblog.dao.UserDao;
 import com.eii.jeeclassproject.jeeblog.model.Post;
+import java.util.Date;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PATCH;
@@ -50,6 +50,16 @@ public class PostResource {
         
         try{
             post.setUser(udao.getUserByEmail(currentUser.getPrincipal().toString()));
+            post.setDraft(Short.valueOf("1"));
+            Post editPost = postDao.getPostByTitle(post.getTitle());
+            if(editPost != null && editPost.getTitle() != null) {
+                editPost.setResume(post.getResume());
+                editPost.setDetails(post.getDetails());
+                editPost.setIsEdited(Short.valueOf("1"));
+                editPost.setDateEdition(new Date(System.currentTimeMillis()));
+                return postDao.updatePost(editPost) ? Response.ok().build() : Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+            }
+            System.out.println("Test");
             return postDao.savePost(post) ? Response.ok().build() : Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }catch(HTTPException ex) {
             log.error(ex.getMessage());
@@ -72,7 +82,6 @@ public class PostResource {
         try{
             Post post = postDao.getPostById(Integer.valueOf(id));
             post.setDetails(details);
-            
             return postDao.updatePost(post) ? Response.ok().build() : Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }catch(HTTPException ex) {
             log.error(ex.getMessage());

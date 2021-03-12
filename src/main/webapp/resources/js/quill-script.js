@@ -7,7 +7,7 @@
 
 
 
-const editor = new Quill('#editor-container', {
+var editor = new Quill('#editor-container', {
     modules: {
         toolbar: '#quill-toolbar',
         syntax : true

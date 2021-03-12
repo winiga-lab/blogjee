@@ -2,16 +2,48 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="/templates/base.xhtml">
-        <div class="row">
-            <div class="col-12 col-sm-3">
-                
+        <ui:define name="content">
+            <div class="row jumbotron">
+                <div class="col-12 col-sm-3 ">
+                    <div class="thumbnail-container ">
+                        <h:graphicImage class="rounded-circle img-thumbnail img-fluid" library="img" name="anonyme.png"/>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-9">
+                    <div class="row col">
+                        <h1 class="display-4 font-weight-bold text-capitalize mt-3">#{author.userInfo.nom} #{author.userInfo.prenom}</h1>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col text-center">
+                            <p class="ml-0 pl-0 font-weight-light h5 ">Nombre d'articles <i class="far fa-newspaper" /></p>
+                            <p class="font-weight-bold">#{author.userInfo.posts.size()}</p>
+                        </div>
+                        <div class="col text-center">
+                            <p class="font-weight-light h5 ">Nombre de vues <i class="far fa-eye" /></p>
+                            <p class="font-weight-bold">#{author.userInfo.totalViews}</p>
+                        </div>
+                        <div class="col font-weight-bold">
+                            <p class="font-weight-light h5 ">Etoiles <i class="far fa-star"/></p>
+                            <p class="font-weight-bold font-italic">on building</p>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
-            <div class="col-12 col-sm-9">
-                
+            <h1 class="headline">Articles </h1>
+            <div class="article-list">
+                <c:when test="#{empty author.userInfo.posts}">
+                    <c:forEach items="#{author.userInfo.posts}" var="post" >
+                        <ui:include src="/partials/article-list-item.xhtml" >
+                            <ui:param name="post" value="#{post}" />
+                        </ui:include>
+                    </c:forEach>
+                </c:when>
             </div>
-        </div>
+        </ui:define>
     </ui:composition>
 </html>
 

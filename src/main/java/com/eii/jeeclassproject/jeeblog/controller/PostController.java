@@ -57,18 +57,31 @@ public class PostController implements Serializable {
     }
 
     public List<Post> paginateMixedPost() {
-        return postDao.getPaginatePostsWithoutDetails(page, resultPerPage);
+        return postDao.getPaginatePublished(page, resultPerPage);
     }
 
-    private void increaseViewsCount(String title) {
+    private void increaseViewsCount(Post post) {
 
         Subject currentUser = SecurityUtils.getSubject();
         //update views of the given post
         Session session = currentUser.getSession();
-        if (session.getAttribute(title) == null) {
-            session.setAttribute(title, true);
+        if (session.getAttribute(post.getTitle()) == null
+                && post.getUser() != null
+                && (currentUser.getPrincipal() == null ? true : !post.getUser().getEmail().equals(currentUser.getPrincipal().toString())) 
+                && post.getDraft() == 0) {
+            session.setAttribute(post.getTitle(), true);
             postDao.incrementPostViewCount(title);
         }
+    }
+    
+    public void changePublishedState() {
+        
+        if(title != null && !title.isEmpty()) {
+            Post p = postDao.getPostByTitle(title);
+            p.setDraft(p.getDraft() != 0 ? Short.valueOf("0") : Short.valueOf("1"));
+            postDao.updatePost(p);
+        }
+        
     }
 
     public Post getPostById() {
@@ -79,8 +92,9 @@ public class PostController implements Serializable {
     public Post getPostByTitle() {
 
         if (title != null && !title.isEmpty()) {
-            increaseViewsCount(title);
-            return postDao.getPostByTitle(title);
+            Post p = postDao.getPostByTitle(title);
+            increaseViewsCount(p);
+            return p;
         }
         return null;
     }

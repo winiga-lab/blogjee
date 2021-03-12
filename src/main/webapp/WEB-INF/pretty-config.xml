@@ -21,7 +21,7 @@
     </url-mapping>
     
     <url-mapping id="editor">
-            <pattern value="/editor" />
+            <pattern value="/editor/#{title}" />
             <view-id value="/editor.xhtml" />
     </url-mapping>
     
@@ -30,5 +30,9 @@
             <view-id value="/postdetails.xhtml" />
     </url-mapping>
 
+    <url-mapping id="profile">
+        <pattern value="/profile" />
+        <view-id value="/author.xhtml" />
+    </url-mapping>
 
 </pretty-config>
