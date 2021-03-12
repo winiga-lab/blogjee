@@ -2,21 +2,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-     <ui:include src="quill-css.xhtml" />
-     
-     <p>Titre :</p>
-     <input type="text" id="post-title" class="form-control"/>
-     
-     <div id="editor">
-         
-         <ui:include src="quill-toolbar.xhtml" />
-         <div id="editor-container"></div>
-     </div>
-     
-     <ui:include src="quill-js.xhtml" />
-     <h:outputScript library="js" name="quill-script.js" />
-     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:include src="quill-css.xhtml" />
+
+    <p>Titre :</p>
+    <h:inputText id="post-title" class="form-control" />
+    <h:inputHidden id="edition-title" value="#{posts.postByTitle.title}" />
+    <!--<h:inputHidden id="edition-title" value="#{posts.postByTitle.title}" />-->
+
+    <div id="editor">
+
+        <ui:include src="quill-toolbar.xhtml" />
+        <div id="editor-container"></div>
+    </div>
+
+    <ui:include src="quill-js.xhtml" />
+    <h:outputScript library="js" name="quill-script.js" />
+    <c:if test="#{posts.postByTitle != null }">
+        <script type="text/javascript">
+            editor.setContents(#{posts.postByTitle.details});
+            document.getElementById("post-title").value = document.getElementById("edition-title").value ;
+            document.getElementById("post-title").setAttribute("readonly", true);
+        </script>
+    </c:if>
+
 </html>
 

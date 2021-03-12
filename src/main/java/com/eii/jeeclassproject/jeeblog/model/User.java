@@ -90,6 +90,14 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
     }
+    
+    public long getTotalViews() {
+        long count = 0;
+        for(Post p : this.posts) {
+            count += p.getViews();
+        }
+        return count;
+    }
 
     public Long getId() {
         return id;

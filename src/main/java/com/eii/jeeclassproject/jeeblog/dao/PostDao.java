@@ -128,7 +128,7 @@ public class PostDao {
             CriteriaQuery<Long> query = builder.createQuery(Long.class);
             Root<Post> root = query.from(Post.class);
             
-            query.select(builder.count(root));
+            query.select(builder.count(root)).where(builder.equal(root.get("draft"), 0));
             
             TypedQuery<Long> q = session.createQuery(query);
             
@@ -215,6 +215,31 @@ public class PostDao {
             Root<Post> root = query.from(Post.class);
             
             query.multiselect(root.get("id"), root.get("title"), root.get("resume"), root.get("views"), root.get("datePost"), root.get("user"));
+            
+            TypedQuery<Post> q = session.createQuery(query);
+            
+            q.setFirstResult((page - 1) * resultPerPage);
+            q.setMaxResults(resultPerPage);
+            return q.getResultList();
+        } catch(Exception ex) {
+            
+            log.error(ex.getMessage(), ex);
+            
+            return null;
+        }
+    }
+    
+    public List<Post> getPaginatePublished(int page, int resultPerPage) {
+        
+        Session session = em.unwrap(Session.class);
+        
+        try{
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Post> query = builder.createQuery(Post.class);
+            Root<Post> root = query.from(Post.class);
+            
+            query.multiselect(root.get("id"), root.get("title"), root.get("resume"), root.get("views"), root.get("datePost"), root.get("user"))
+                    .where(builder.equal(root.get("draft"), 0));
             
             TypedQuery<Post> q = session.createQuery(query);
             

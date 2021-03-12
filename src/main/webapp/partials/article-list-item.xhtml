@@ -8,13 +8,31 @@
 
 
     <article class="list-item" itemscope="" itemtype="http://schema.org/Blog">
-        <h2 class="headline" itemprop="headline"><h:link value="#{post.title}" outcome="postdetails.xhtml"><f:param name="title" value="#{post.title}" /></h:link></h2>
+        <h2 class="headline" itemprop="headline">
+            <h:link value="#{post.title}" outcome="postdetails.xhtml"><f:param name="title" value="#{post.title}" /></h:link>
+
+        </h2>
+        <c:if test="#{author.userInfo != null and post.user.email == author.userInfo.email}">
+            <div clas="d-inline">
+                <h:link outcome="editor.xhtml" class="btn btn-primary">Editer <f:param name="title" value="#{post.title}" /><i class="far fa-edit" /> </h:link>
+                
+                <h:form class="d-inline">
+                    <h:commandLink action="#{posts.changePublishedState()}" class="btn btn-outline-secondary">
+                        <c:choose>
+                            <c:when test="#{post.getDraft() == 1}" >publier </c:when>
+                            <c:otherwise>Dépublier</c:otherwise>
+                        </c:choose>
+                        <f:param name="title" value="#{post.title}" /><i class="fas fa-globe-europe" /> 
+                    </h:commandLink>
+                </h:form>
+            </div>
+        </c:if>
         <div class="meta">
             <c:if test="#{post.datePost != null}">
                 <span class="key">publié en</span>
                 <span class="val"><time itemprop="datePublished" datetime="#{post.datePost}">#{of:formatDate(post.datePost, 'MMMM dd, yyyy')}</time></span>
                 - 
-                <span class="key">#{post.views}</span>
+                <span class="key"><i class="far fa-eye" /> #{post.views}</span>
                 <span class="val">Vues</span>
             </c:if>
         </div>
