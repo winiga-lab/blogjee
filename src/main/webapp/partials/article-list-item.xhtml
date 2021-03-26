@@ -29,8 +29,8 @@
         </c:if>
         <div class="meta">
             <c:if test="#{post.datePost != null}">
-                <span class="key">publié en</span>
-                <span class="val"><time itemprop="datePublished" datetime="#{post.datePost}">#{of:formatDate(post.datePost, 'MMMM dd, yyyy')}</time></span>
+                <span class="key">publié le</span>
+                <span class="val"><time itemprop="datePublished" datetime="#{post.datePost}">#{of:formatDate(post.datePost, 'dd MMMM, yyyy')}</time></span>
                 - 
                 <span class="key"><i class="far fa-eye" /> #{post.views}</span>
                 <span class="val">Vues</span>
