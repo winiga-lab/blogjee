@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <f:event type="preRenderView" listener="#{sessionControl.redirectAuthenticated()}" />
 
@@ -25,6 +26,9 @@
                             <div class="login-space">
                                 <div class="login">
                                     <h:form>
+                                        <p:messages id="loginMessage" showDetail="true" closable="true">
+                                            <p:autoUpdate/>
+                                        </p:messages>
                                         <div class="group"> <label for="user" class="label">Email</label> <h:inputText value="#{login.username}" id="user" class="input" a:placeholder="Enter your username"/> </div>
                                         <div class="group"> <label for="pass" class="label">Password</label> <h:inputSecret value="#{login.password}" id="pass" class="input" a:placeholder="Enter your password"/> </div>
                                         <div class="group"> <input id="check" type="checkbox" class="check" checked='false'/> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div>

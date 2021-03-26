@@ -1,21 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <!--<h:head>
         <title>Blog JEE - 404</title>
         <h:outputStylesheet library="css" name="errorsStyle.css" />
         
     </h:head>
-    <h:body>
+    <h:body style="background-image: linear-gradient(120deg, #f7f43c 0%, #000 50%) ! important; ">
         <h1>404</h1>
         <div><p>> <span>ERROR CODE</span>: "<i>HTTP 404 Not Found</i>"</p>
-            <p>> <span>ERROR DESCRIPTION</span>: "<i>#{pfExceptionHandler.message}</i>"</p>
-            <p>> <span>ERROR POSSIBLY CAUSED BY</span>: [<b>execute access forbidden, read access forbidden, write access forbidden, ssl required, ssl 128 required, ip address rejected, client certificate required, site access denied, too many users, invalid configuration, password change, mapper denied access, client certificate revoked, directory listing denied, client access licenses exceeded, client certificate is untrusted or invalid, client certificate has expired or is not yet valid, passport logon failed, source access denied, infinite depth is denied, too many requests from the same client ip</b>...]</p>
-            <p>> <span>SOME PAGES ON THIS SERVER THAT YOU DO HAVE PERMISSION TO ACCESS</span>: [<a href="/">Home Page</a>, <a href="/">About Us</a>, <a href="/">Contact Us</a>, <a href="/">Blog</a>...]</p><p>> <span>HAVE A NICE DAY SIR AXLEROD :-)</span></p>
+            <p>> <span>ERROR DESCRIPTION</span>: "<i>Page ou article non inexistante ou supprimé</i>"</p>
+            <p>> <span>RETOUR A LA PAGE D'ACCUEIL</span>: [<h:link outcome="/index.xhtml" value="Page d'Accueil"/>]</p>
         </div>
-        <!--script for fancy animation -->
-        <h:outputScript library="js" name="errorsJs.js" />
-    </h:body>
+        script for fancy animation -->
+        <!--<h:outputScript library="js" name="errorsJs.js" />
+    </h:body>-->
+        <ui:composition template="baseError.xhtml">
+            
+        </ui:composition>
 </html>
 

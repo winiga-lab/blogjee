@@ -34,5 +34,10 @@
         <pattern value="/profile" />
         <view-id value="/author.xhtml" />
     </url-mapping>
+    
+    <url-mapping id="admin">
+        <pattern value="/admins" />
+        <view-id value="/admin/index.xhtml" />
+    </url-mapping>
 
 </pretty-config>

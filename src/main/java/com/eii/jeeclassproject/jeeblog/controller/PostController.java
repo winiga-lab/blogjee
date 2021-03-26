@@ -57,6 +57,7 @@ public class PostController implements Serializable {
     }
 
     public List<Post> paginateMixedPost() {
+//        postDao.getCreatedByDate();
         return postDao.getPaginatePublished(page, resultPerPage);
     }
 

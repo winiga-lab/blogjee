@@ -37,14 +37,6 @@ public class UserDao {
     @PersistenceContext(unitName = "blogPU")
     private EntityManager em; 
     
-    public void getEntityManager() {
-        
-        if(em == null) {
-            EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("blogPU");//
-            em = ENTITY_MANAGER_FACTORY.createEntityManager();
-        }
-    }
-    
     public  boolean saveUser(User user) {
         
         //EntityTransaction tx = em.getTransaction();
