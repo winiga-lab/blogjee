@@ -332,7 +332,7 @@ public class PostDao {
         }
     }
 
-    public HashMap<Date,Long> getCreatedByDate() {
+    public HashMap<Date, Long> getCreatedByDate() {
 
         Session session = em.unwrap(Session.class);
         HashMap<Date, Long> statCreationPost = new HashMap<>();
@@ -340,12 +340,12 @@ public class PostDao {
             Query q = session.createNamedQuery("Post.findNumberPostBy");
             List<Object[]> results = q.getResultList();
             results.forEach(result -> {
-                statCreationPost.put((Date)result[0], (Long)result[1]);
+                statCreationPost.put((Date) result[0], (Long) result[1]);
             });
             return statCreationPost;
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
-            
+
             return null;
         }
     }
@@ -355,7 +355,7 @@ public class PostDao {
         Session session = em.unwrap(Session.class);
 
         try {
-
+            session.refresh(post);
             session.delete(post);
 
             return true;
@@ -364,6 +364,18 @@ public class PostDao {
             log.error(ex.getMessage(), ex);
 
             return false;
+        }
+    }
+    
+    public boolean deletePostByTitle(String title) {
+        
+        Session session = em.unwrap(Session.class);
+        
+        try {
+            session.delete(this.getPostByTitle(title));
+            return true;
+        } catch(Exception ex) {
+            throw(ex);
         }
     }
 

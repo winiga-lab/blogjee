@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:include src="quill-css.xhtml" />
 
@@ -13,6 +14,8 @@
     <!--<h:inputHidden id="edition-title" value="#{posts.postByTitle.title}" />-->
 
     <div id="editor">
+        <h:form>
+            <p:growl widgetVar="editorInfo" showDetail="true"/></h:form>
 
         <ui:include src="quill-toolbar.xhtml" />
         <div id="editor-container"></div>

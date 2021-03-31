@@ -4,25 +4,32 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:of="http://omnifaces.org/functions">
+      xmlns:of="http://omnifaces.org/functions"
+      xmlns:p="http://primefaces.org/ui">
 
 
     <article class="list-item" itemscope="" itemtype="http://schema.org/Blog">
+        <p:growl id="growl" showDetail="true" />
         <h2 class="headline" itemprop="headline">
             <h:link value="#{post.title}" outcome="postdetails.xhtml"><f:param name="title" value="#{post.title}" /></h:link>
 
         </h2>
         <c:if test="#{author.userInfo != null and post.user.email == author.userInfo.email}">
             <div clas="d-inline">
-                <h:link outcome="editor.xhtml" class="btn btn-primary">Editer <f:param name="title" value="#{post.title}" /><i class="far fa-edit" /> </h:link>
-                
                 <h:form class="d-inline">
-                    <h:commandLink action="#{posts.changePublishedState()}" class="btn btn-outline-secondary">
+                    <h:link outcome="editor.xhtml" class="btn btn-primary">Editer <f:param name="title" value="#{post.title}" /><i class="far fa-edit" /> </h:link>
+
+
+                    <h:commandLink action="#{posts.changePublishedState()}" class="btn btn-outline-secondary ml-3">
                         <c:choose>
                             <c:when test="#{post.getDraft() == 1}" >publier </c:when>
                             <c:otherwise>Dépublier</c:otherwise>
                         </c:choose>
                         <f:param name="title" value="#{post.title}" /><i class="fas fa-globe-europe" /> 
+                    </h:commandLink>
+                    <h:commandLink action="#{posts.deletePost()}" class="btn btn-danger ml-3" >
+                        Supprimer <i class="fas fa-trash" />
+                        <f:param name="title" value="#{post.title}" />
                     </h:commandLink>
                 </h:form>
             </div>

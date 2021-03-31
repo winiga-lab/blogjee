@@ -7,11 +7,13 @@ package com.eii.jeeclassproject.jeeblog.controller;
 
 import com.eii.jeeclassproject.jeeblog.dao.PostDao;
 import com.eii.jeeclassproject.jeeblog.model.Post;
+import com.eii.jeeclassproject.jeeblog.utils.Messenger;
 import com.eii.jeeclassproject.jeeblog.utils.Paginator;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -80,9 +82,24 @@ public class PostController implements Serializable {
         if(title != null && !title.isEmpty()) {
             Post p = postDao.getPostByTitle(title);
             p.setDraft(p.getDraft() != 0 ? Short.valueOf("0") : Short.valueOf("1"));
-            postDao.updatePost(p);
+            if(postDao.updatePost(p)) {
+                Messenger.addMessage(FacesMessage.SEVERITY_INFO, "Publication d'articles", "Votre article a été " + (p.getDraft() != 0 ? "dépublié" : "publié") );
+            } else {
+                Messenger.genericErrorMessage();
+            }
         }
         
+    }
+    
+    public void deletePost() {
+        
+        if(title != null && !title.isEmpty()) {
+            if(postDao.deletePostByTitle(title)) {
+                Messenger.addMessage(FacesMessage.SEVERITY_INFO, "Suppression effectué", "L'article " + title + " à été supprimer avec succès.");
+            } else{
+                Messenger.genericErrorMessage();
+            }
+        }
     }
 
     public Post getPostById() {
