@@ -5,15 +5,11 @@
  */
 package com.eii.jeeclassproject.jeeblog.dao;
 
-import com.eii.jeeclassproject.jeeblog.controller.LoginController;
 import com.eii.jeeclassproject.jeeblog.model.Roles;
 import com.eii.jeeclassproject.jeeblog.model.User;
 import com.eii.jeeclassproject.jeeblog.security.BCryptPasswordService;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -22,6 +18,7 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,6 +90,10 @@ public class UserDao {
             log.error(ex.getMessage(), ex);
             
             return false;
+        } catch(ConstraintViolationException ex) {
+            log.error(ex.getMessage());
+            
+            throw(ex);
         }
     }
     

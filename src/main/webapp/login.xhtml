@@ -26,25 +26,55 @@
                             <div class="login-space">
                                 <div class="login">
                                     <h:form>
-                                        <p:messages id="loginMessage" showDetail="true" closable="true">
-                                            <p:autoUpdate/>
+                                        <p:messages id="loginMessage" showDetail="false" closable="true" >
                                         </p:messages>
-                                        <div class="group"> <label for="user" class="label">Email</label> <h:inputText value="#{login.username}" id="user" class="input" a:placeholder="Enter your username"/> </div>
-                                        <div class="group"> <label for="pass" class="label">Password</label> <h:inputSecret value="#{login.password}" id="pass" class="input" a:placeholder="Enter your password"/> </div>
-                                        <div class="group"> <input id="check" type="checkbox" class="check" checked='false'/> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div>
-                                        <div class="group"> <h:commandButton  action="#{login.doLogin()}" class="button" value="S'authentifier" /> </div>
+                                        <div class="group"> <label for="user" class="label">Email</label> 
+                                            <h:inputText value="#{login.username}" id="user" class="input" a:placeholder="Enter your username" required="true" requiredMessage="Vous devez renseigner l'E-mail de connexion" validatorMessage="Vous avez renseigné(e) un E-mail incorrect">
+                                                <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+                                            </h:inputText>
+                                        </div>
+                                        <div class="group"> <label for="pass" class="label">Password</label> 
+                                            <h:inputSecret value="#{login.password}" id="pass" class="input" a:placeholder="Enter your password" required="true" requiredMessage="Vous devez renseigner votre mot de passe de connexion"/> 
+                                        </div>
+                                        <div class="group"> <input id="check" type="checkbox" class="check" checked='false'/> <label for="check"><span class="icon"></span> Keep me Signed in</label> 
+                                        </div>
+                                        <div class="group"> <p:commandButton  action="#{login.doLogin()}" class="button" value="S'authentifier" update="@form"/> </div>
                                     </h:form>
                                     <div class="hr"></div>
                                     <div class="foot"> <a href="#">Forgot Password?</a> </div>
                                 </div>
                                 <div class="sign-up-form">
-                                    <h:form>
-                                        <div class="group"> <label for="nom" class="label">Nom</label> <h:inputText value="#{register.user.nom}" id="nom" class="input" a:placeholder="Doe ..."/> </div>
-                                        <div class="group"> <label for="prenom" class="label">Prenom</label> <h:inputText value="#{register.user.prenom}" id="prenom" class="input" a:placeholder="Jhon ..."/> </div>
-                                        <div class="group"> <label for="email" class="label">Email</label> <h:inputText value="#{register.user.email}" id="email" class="input" a:placeholder="jhon.doe@example.com"/> </div>
-                                        <div class="group"> <label for="newPass" class="label">Mot de passe</label> <h:inputSecret value="#{register.user.password}" id="newPass" class="input" a:placeholder="Votre mot de passe"/> </div>
-                                        <div class="group"> <label for="confimrPass" class="label">Confirmer Mot de passe</label> <input id="confimrPass" type="password" class="input" data-type="password" placeholder="Confirmez votre mot de passe"/> </div>
-                                        <div class="group"> <h:commandButton action="#{register.doRegister()}" value="S'enrégistrer" class="button" /> </div>
+                                    <h:form id="singupForm">
+                                        <p:messages id="singupMessage" showDetail="false" closable="true" >
+                                        </p:messages>
+                                        <div class="group"> <label for="nom" class="label">Nom</label>
+                                            <h:inputText value="#{register.user.nom}" id="nom" class="input" a:placeholder="Doe ..." required="true" requiredMessage="Vous devez renseigner votre nom" validatorMessage="Le nom que vous avez renseigné(e) semble incorrect">
+                                                <f:validateLength minimum="2" />
+                                                <f:validateRegex pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$" />
+                                            </h:inputText>
+                                        </div>
+                                        <div class="group"> <label for="prenom" class="label">Prenom</label> 
+                                            <h:inputText value="#{register.user.prenom}" id="prenom" class="input" a:placeholder="Jhon ..." required="true" requiredMessage="Vous devez renseigner votre/vos prénom(s)" validatorMessage="Le(s) prénom(s) que vous avez renseigné(e) semble incorrect(s)">
+                                                <f:validateLength minimum="2" />
+                                                <f:validateRegex pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$" />
+                                            </h:inputText>
+                                        </div>
+                                        <div class="group"> <label for="email" class="label">Email</label> 
+                                            <h:inputText value="#{register.user.email}" id="email" class="input" a:placeholder="jhon.doe@example.com" required="true" requiredMessage="Vous devez renseigner l'E-mail de connexion" validatorMessage="Vous avez renseigné(e) un E-mail incorrect">
+                                                <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+                                            </h:inputText>
+                                        </div>
+                                        <div class="group"> <label for="newPass" class="label">Mot de passe</label> 
+                                            <p:password value="#{register.user.password}" id="newPass" class="input" match="confimrPass" a:placeholder="Votre mot de passe" required="true" requiredMessage="Vous devez renseigner votre mot de passe de connexion" validatorMessage="Vote mot de passe n'est pas assez sécurisé ou ne correspond au mot de passe de confirmation" feedback="true" inline="true" redisplay="true">
+                                                <f:validateLength minimum="8" />
+                                            </p:password>
+                                        </div>
+                                        <div class="group"> <label for="confimrPass" class="label">Confirmer Mot de passe</label> 
+                                            <p:password id="confimrPass" class="input" value="#{register.user.password}" placeholder="Confirmez votre mot de passe" required="true" requiredMessage="Veuillez confirmer votre mot de passe de connexion" feedback="false" redisplay="true"/> 
+                                        </div>
+                                        <div class="group"> 
+                                            <p:commandButton action="#{register.doRegister()}" value="S'enrégistrer" class="button" update="@form" /> 
+                                        </div>
                                     </h:form>
                                     <div class="hr"></div>
                                     <div class="foot"> <label for="tab-1">Already Member?</label> </div>
