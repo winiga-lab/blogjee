@@ -6,9 +6,11 @@
 package com.eii.jeeclassproject.jeeblog.controller;
 
 import com.eii.jeeclassproject.jeeblog.dao.UserDao;
+import com.eii.jeeclassproject.jeeblog.utils.Messenger;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -65,8 +67,10 @@ public class LoginController implements Serializable{
                 ec.redirect(ec.getRequestContextPath() + "/");
             }
         } catch (UnknownAccountException ex) {
+            Messenger.addMessage(null, FacesMessage.SEVERITY_FATAL, "Les informations de connexion sont inexistantes! veuillez créer le compte", null);
             log.error(ex.getMessage(), ex);
         } catch (IncorrectCredentialsException | LockedAccountException ex) {
+            Messenger.addMessage(null, FacesMessage.SEVERITY_FATAL, "Informations de connexion erronées", null);
             log.error(ex.getMessage(), ex);
         } catch (AuthenticationException | IOException ex) {
             log.error(ex.getMessage(), ex);
