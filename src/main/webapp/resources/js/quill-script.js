@@ -31,7 +31,8 @@ editor.keyboard.addBinding({key: 's', shortKey: true}, function (range, context)
         let param = '';
         if (document.getElementById("paramId") && document.getElementById("paramId").value)
             param = '/' + document.getElementById("paramId").value;
-        getToken.open('GET', '/jeeblog-1.0-SNAPSHOT/JWTProvider' + param, true);
+        let ctx  = document.getElementById('ctx').value;
+        getToken.open('GET', ctx + '/JWTProvider' + param, true);
         getToken.overrideMimeType("text/plain");
 
         getToken.onload = () => {
@@ -40,7 +41,7 @@ editor.keyboard.addBinding({key: 's', shortKey: true}, function (range, context)
 
                 const xhr = new XMLHttpRequest();
                 const pd = {};
-                xhr.open('POST', '/jeeblog-1.0-SNAPSHOT/api/post', true);
+                xhr.open('POST', ctx + '/api/post', true);
                 xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                 xhr.setRequestHeader('Authorization', 'Bearer ' + getToken.responseText);
                 xhr.onload = () => {
