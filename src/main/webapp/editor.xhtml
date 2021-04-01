@@ -7,6 +7,7 @@
     
     <ui:composition template="/templates/base.xhtml">
         <ui:define name="content">
+            <h:inputHidden value="#{request.contextPath}" id="ctx" />
              <ui:include src="/partials/quill-editor.xhtml" />
         </ui:define>
     </ui:composition>
