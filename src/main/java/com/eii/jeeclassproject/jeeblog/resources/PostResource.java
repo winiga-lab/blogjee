@@ -59,7 +59,6 @@ public class PostResource {
                 editPost.setDateEdition(new Date(System.currentTimeMillis()));
                 return postDao.updatePost(editPost) ? Response.ok().build() : Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
             }
-            System.out.println("Test");
             return postDao.savePost(post) ? Response.ok().build() : Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
         }catch(HTTPException ex) {
             log.error(ex.getMessage());
