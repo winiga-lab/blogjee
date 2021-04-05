@@ -9,6 +9,7 @@
 
 
     <article class="list-item" itemscope="" itemtype="http://schema.org/Blog">
+        
         <p:growl id="growl" showDetail="true" />
         <h2 class="headline" itemprop="headline">
             <h:link value="#{post.title}" outcome="postdetails.xhtml"><f:param name="title" value="#{post.title}" /></h:link>
@@ -16,7 +17,7 @@
         </h2>
         <c:if test="#{author.userInfo != null and post.user.email == author.userInfo.email}">
             <div clas="d-inline">
-                <h:form class="d-inline">
+                <h:form class="d-inline" >
                     <h:link outcome="editor.xhtml" class="btn btn-primary">Editer <f:param name="title" value="#{post.title}" /><i class="far fa-edit" /> </h:link>
 
 
@@ -27,7 +28,9 @@
                         </c:choose>
                         <f:param name="title" value="#{post.title}" /><i class="fas fa-globe-europe" /> 
                     </h:commandLink>
-                    <h:commandLink action="#{posts.deletePost()}" class="btn btn-danger ml-3" >
+                    <a onclick="if(confirm('Vous pouvez dépublier votre article temporairement. La suppression est irréversible ! Voulez-vous poursuivre cette opération ?')) { document.getElementById(this.parentNode.id + ':deleteArt').click();}" 
+                       class="btn btn-danger ml-3 text-white"  > Supprimer <i class="fas fa-trash" /> </a>
+                    <h:commandLink action="#{posts.deletePost()}" id="deleteArt" class="d-none"  >
                         Supprimer <i class="fas fa-trash" />
                         <f:param name="title" value="#{post.title}" />
                     </h:commandLink>
