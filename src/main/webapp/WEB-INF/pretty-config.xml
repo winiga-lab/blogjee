@@ -39,5 +39,10 @@
         <pattern value="/admins" />
         <view-id value="/admin/index.xhtml" />
     </url-mapping>
+    
+    <url-mapping id="userManagement">
+        <pattern value="/admins/usermnt" />
+        <view-id value="/admin/usermanagement.xhtml" />
+    </url-mapping>
 
 </pretty-config>
