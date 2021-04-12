@@ -4,6 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:o="http://omnifaces.org/ui"
       xmlns:of="http://omnifaces.org/functions"
       xmlns:p="http://primefaces.org/ui">
 
@@ -12,13 +13,13 @@
         
         <p:growl id="growl" showDetail="true" />
         <h2 class="headline" itemprop="headline">
-            <h:link value="#{post.title}" outcome="postdetails.xhtml"><f:param name="title" value="#{post.title}" /></h:link>
+            <h:link value="#{post.title}" outcome="postdetails.xhtml"><o:param name="title" value="#{post.title}" converter="paramConverter" /></h:link>
 
         </h2>
         <c:if test="#{author.userInfo != null and post.user.email == author.userInfo.email}">
             <div clas="d-inline">
                 <h:form class="d-inline" >
-                    <h:link outcome="editor.xhtml" class="btn btn-primary">Editer <f:param name="title" value="#{post.title}" /><i class="far fa-edit" /> </h:link>
+                    <h:link outcome="editor.xhtml" class="btn btn-primary">Editer <o:param name="title" value="#{post.title}" converter="paramConverter" /><i class="far fa-edit" /> </h:link>
 
 
                     <h:commandLink action="#{posts.changePublishedState()}" class="btn btn-outline-secondary ml-3">
@@ -26,13 +27,13 @@
                             <c:when test="#{post.getDraft() == 1}" >publier </c:when>
                             <c:otherwise>Dépublier</c:otherwise>
                         </c:choose>
-                        <f:param name="title" value="#{post.title}" /><i class="fas fa-globe-europe" /> 
+                        <o:param name="title" value="#{post.title}" converter="paramConverter" /><i class="fas fa-globe-europe" /> 
                     </h:commandLink>
                     <a onclick="if(confirm('Vous pouvez dépublier votre article temporairement. La suppression est irréversible ! Voulez-vous poursuivre cette opération ?')) { document.getElementById(this.parentNode.id + ':deleteArt').click();}" 
                        class="btn btn-danger ml-3 text-white"  > Supprimer <i class="fas fa-trash" /> </a>
                     <h:commandLink action="#{posts.deletePost()}" id="deleteArt" class="d-none"  >
                         Supprimer <i class="fas fa-trash" />
-                        <f:param name="title" value="#{post.title}" />
+                        <o:param name="title" value="#{post.title}" converter="paramConverter" />
                     </h:commandLink>
                 </h:form>
             </div>
